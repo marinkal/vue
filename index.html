@@ -24,7 +24,9 @@
                     <hr/>
                     <ul class="list-group">
                         <li 
-                            v-for="car in cars"
+                            v-for="(car,index) of cars"
+                            v-on:click="selectedCar(index)"
+                            :class="{'active': selectedCarIndex === index}"
                             class="list-group-item list-group-item-action pointer">
                                 {{car.name}} - {{car.model}}
                         </li>
@@ -34,19 +36,23 @@
             <div class="col-md-8 pt-3">
                 <div class="row">
                     <div class="col-md-5">
-                        <h2>Ford</h2>
-                        <img src="images/focus.png" alt="" class="rounded detailed-car-image"/>
+                        <h2>{{ car.name }}</h2>
+                        <img 
+                            :src="car.image"
+                            :alt="car.name"
+                            class="rounded detailed-car-image"
+                        />
                     </div>
                     <div class="col-md-7 pt-2">
                         <h5>car details</h5>
 
                         <ul>
-                            <li>Model - <strong>Focus</strong></li>
-                            <li>Year - <strong>2015</strong></li>
-                            <li>Owner - <strong>Max</strong></li>
+                            <li>Model - <strong>{{ car.model }}</strong></li>
+                            <li>Year - <strong>{{ car.year }}</strong></li>
+                            <li>Owner - <strong>{{ car.name }}</strong></li>
                         </ul>
-                        <p>Phone +7 912 233 21 11</p>
-                        <button class="btn btn-outline-success mr-3">Show phone</button>
+                        <p v-if="phoneVisibility">{{ car.phone }}</p>
+                        <button class="btn btn-outline-success mr-3" v-on:click="phoneVisibility = true">Show phone</button>
                         <button class="btn btn-primary">Buy</button>
 
                     </div>
