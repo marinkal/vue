@@ -1,4 +1,5 @@
 const car = (name, model, year, owner, phone, image) => ({name, model, year, owner, phone, image})
+const log = (text, type, date = new Date()) => ({text, type, date})
 
 let cars = 
     [
@@ -16,12 +17,23 @@ new Vue({
         car: cars[0],
         phoneVisibility: false,
         search: '',
-        modalVisibility: false
+        modalVisibility: false,
+        logs: []
     },
     methods: {
         selectedCar: function(index) {
             this.car = cars[index];
             this.selectedCarIndex = index;
+        },
+        buyBtnClick: function(){
+            this.modalVisibility = false;
+            const car = this.cars[this.selectedCarIndex];
+            this.logs.push(log(`Success order: ${car.name} - ${car.model}`, "ok"));
+        },
+        cancelBtnClick: function(){
+            this.modalVisibility = false;
+            const car = this.cars[this.selectedCarIndex];
+            this.logs.push(log(`Success order: ${car.name} - ${car.model}`, "cnl"));
         }
     },
     computed: {
@@ -32,6 +44,11 @@ new Vue({
             return this.cars.filter(car => {
                 return car.name.indexOf(this.search) > -1 || car.model.indexOf(this.search) > -1
             });
+        }
+    },
+    filters: {
+        date(value){
+            return value.toLocaleString() ;
         }
     }
 });

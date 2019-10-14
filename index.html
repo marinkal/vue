@@ -78,6 +78,22 @@
             </div>
         </div>
 
+        <div class="row pt-3" v-if="logs.length">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li 
+                        class="list-group-item"
+                        v-for="log of logs"
+                        :class="{
+                        'list-group-item-secondary': log.type === 'cnl',
+                        'list-group-item-success': log.type === 'ok'
+                        }"
+                    >
+                    {{ log.text }} {{ log.date | date }}
+                </li>
+                </ul>
+            </div>
+        </div>
         <!-- Modal -->
         <div 
             class="modal fade show" 
@@ -101,17 +117,26 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                    ...
+                        <h5>{{car.name}}</h5>
+                        <ul>
+                            <li>Model: {{car.model}}</li>
+                            <li>Year: {{car.year}}</li>
+                        </ul>
                     </div>
                     <div class="modal-footer">
                     <button 
                         type="button" 
                         class="btn btn-secondary" 
                         data-dismiss="modal"
-                        @click="modalVisibility=false">
-                            Close
+                        @click="cancelBtnClick">
+                            Cancel
                         </button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button 
+                        type="button" 
+                        class="btn btn-primary"
+                        @click="buyBtnClick">
+                            Buy
+                    </button>
                     </div>
                 </div>
                 </div>
